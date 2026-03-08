@@ -1,34 +1,38 @@
 const API_KEY = 'AIzaSyDpifV8J2_NIouCqiTBiQFTiAt-YH-XNWU';
+const API_BASE = 'https://www.googleapis.com/youtube/v3';
 
-async function fetchVideos(query = 'documentary') {
-    const grid = document.getElementById('video-grid');
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=20&key=${API_KEY}`;
-    
-    const response = await fetch(url);
-    const data = await response.json();
-    grid.innerHTML = '';
-    
-    for (const item of data.items) {
-        const details = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet,statistics&id=${item.id.videoId}&key=${API_KEY}`).then(r => r.json());
-        const video = details.items[0];
-        
-        // Duration Check: Must be >= 210 seconds (3:30 mins)
-        const durationSeconds = parseISO8601Duration(video.contentDetails.duration);
-        if (durationSeconds >= 210) {
-            grid.innerHTML += `
-                <div class="bg-white p-4 rounded-xl border hover:shadow-lg cursor-pointer" onclick="window.location.href='watch.html?id=${item.id.videoId}'">
-                    <img src="${video.snippet.thumbnails.high.url}" class="rounded-lg w-full">
-                    <h3 class="font-bold mt-3">${video.snippet.title}</h3>
-                    <p class="text-sm text-gray-600">${video.snippet.channelTitle}</p>
-                </div>`;
+const app = {
+    async fetch(query) {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '<p>Verifying human content metadata...</p>';
+        try {
+            const response = await fetch(`${API_BASE}/search?part=snippet&q=${query}&type=video&maxResults=24&key=${API_KEY}`);
+            const data = await response.json();
+            this.render(data.items);
+        } catch (e) { grid.innerHTML = 'Error: Cannot establish connection to API.'; }
+    },
+    async render(items) {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        for (const item of items) {
+            const vData = await fetch(`${API_BASE}/videos?part=snippet,contentDetails,statistics&id=${item.id.videoId}&key=${API_KEY}`).then(r => r.json());
+            const v = vData.items[0];
+            // Duration filter: Only accept 3:30+
+            if (this.isHumanLongForm(v.contentDetails.duration)) {
+                grid.innerHTML += `
+                    <div class="card" onclick="window.location.href='watch.html?id=${v.id}'">
+                        <img src="${v.snippet.thumbnails.high.url}" class="rounded w-full">
+                        <h3 class="font-bold mt-4">${v.snippet.title}</h3>
+                        <p class="text-sm text-gray-600">${v.snippet.channelTitle}</p>
+                    </div>`;
+            }
         }
+    },
+    isHumanLongForm(duration) {
+        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        const sec = (parseInt(match[1]) || 0) * 3600 + (parseInt(match[2]) || 0) * 60 + (parseInt(match[3]) || 0);
+        return sec >= 210; 
     }
-}
-
-function parseISO8601Duration(duration) {
-    const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    return (parseInt(match[1]) || 0) * 3600 + (parseInt(match[2]) || 0) * 60 + (parseInt(match[3]) || 0);
-}
-
-document.getElementById('search-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') fetchVideos(e.target.value); });
-fetchVideos();
+};
+document.getElementById('search-bar').addEventListener('keypress', (e) => { if(e.key === 'Enter') app.fetch(e.target.value); });
+app.fetch('documentaries');
