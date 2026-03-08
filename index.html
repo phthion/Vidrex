@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <title>YouToo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #f9f9f9; font-family: sans-serif; }
-        .video-card:hover { transform: translateY(-5px); transition: 0.2s; }
-    </style>
 </head>
-<body>
-    <nav class="bg-white p-6 border-b flex justify-between items-center sticky top-0 z-50">
+<body class="bg-gray-50 text-gray-900">
+    <nav class="bg-white border-b p-6 flex justify-between items-center sticky top-0 z-50">
         <h1 class="text-3xl font-black text-red-600 cursor-pointer" onclick="location.reload()">YouToo</h1>
-        <input type="text" id="search-input" placeholder="Search human-made content..." class="border rounded-full px-6 py-2 w-1/2">
+        <div class="w-1/2">
+            <input type="text" id="search-input" placeholder="Search human-made long-form videos..." class="w-full border rounded-full px-6 py-2 outline-none focus:ring-2 focus:ring-red-500">
+        </div>
     </nav>
-    <div class="flex max-w-7xl mx-auto p-6 gap-8">
+    <div class="max-w-7xl mx-auto p-8 flex gap-8">
         <aside class="w-1/5">
-            <h2 class="font-bold text-gray-400 uppercase text-xs mb-4">Categories</h2>
-            <ul class="space-y-4 font-semibold text-gray-700">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Categories</h2>
+            <ul class="space-y-3 font-semibold text-gray-600">
                 <li onclick="fetchVideos('travel')" class="cursor-pointer hover:text-red-600">Travel</li>
                 <li onclick="fetchVideos('music')" class="cursor-pointer hover:text-red-600">Music</li>
                 <li onclick="fetchVideos('technology')" class="cursor-pointer hover:text-red-600">Technology</li>
             </ul>
         </aside>
-        <main class="w-4/5 grid grid-cols-1 md:grid-cols-3 gap-8" id="video-grid"></main>
+        <main id="video-grid" class="w-4/5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <p class="text-gray-500">Loading content...</p>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
