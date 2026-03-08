@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Watching | YouToo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-5xl mx-auto">
+        <a href="index.html" class="text-gray-500 hover:text-red-600 font-bold mb-6 block">← Back to Feed</a>
+        <div id="player" class="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl">
+            </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
+        
+        document.getElementById('player').innerHTML = `
+            <iframe width="100%" height="100%" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1" 
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
+        `;
+    </script>
+</body>
+</html>
