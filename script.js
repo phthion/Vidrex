@@ -1,27 +1,25 @@
 const API_KEY = 'AIzaSyDpifV8J2_NIouCqiTBiQFTiAt-YH-XNWU';
 
-async function fetchVideos(query = 'popular') {
+async function fetchVideos(query = 'documentary') {
     const grid = document.getElementById('video-grid');
-    const endpoint = query === 'popular' 
-        ? `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=20&key=${API_KEY}`
-        : `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=20&key=${API_KEY}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&maxResults=20&key=${API_KEY}`;
     
-    const response = await fetch(endpoint);
+    const response = await fetch(url);
     const data = await response.json();
     grid.innerHTML = '';
     
     for (const item of data.items) {
-        const id = item.id.videoId || item.id;
-        const details = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet,statistics&id=${id}&key=${API_KEY}`).then(r => r.json());
+        const details = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet,statistics&id=${item.id.videoId}&key=${API_KEY}`).then(r => r.json());
         const video = details.items[0];
         
-        // Human Content Logic: > 3:30 mins
-        if (parseISO8601Duration(video.contentDetails.duration) >= 210) {
+        // Duration Check: Must be >= 210 seconds (3:30 mins)
+        const durationSeconds = parseISO8601Duration(video.contentDetails.duration);
+        if (durationSeconds >= 210) {
             grid.innerHTML += `
-                <div class="video-card cursor-pointer" onclick="window.location.href='watch.html?id=${id}'">
-                    <img src="${video.snippet.thumbnails.high.url}" class="rounded-xl w-full">
+                <div class="bg-white p-4 rounded-xl border hover:shadow-lg cursor-pointer" onclick="window.location.href='watch.html?id=${item.id.videoId}'">
+                    <img src="${video.snippet.thumbnails.high.url}" class="rounded-lg w-full">
                     <h3 class="font-bold mt-3">${video.snippet.title}</h3>
-                    <p class="text-sm text-gray-500">${video.snippet.channelTitle}</p>
+                    <p class="text-sm text-gray-600">${video.snippet.channelTitle}</p>
                 </div>`;
         }
     }
