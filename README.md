@@ -16,7 +16,7 @@ YouTube but better, "no shorts", no ads (as long as you Brave browse or any exte
 
 *Step 7*: After that, it will direct you to API of YouTube API Data v3, Open Hamburger button, and click Credentials then create credentals -> API key.
 
-*Step 8*: Put whatever name, THEN THIS IS IMPORTANT, "Application restrictions" click "website", click add and copy this link : https://phthion.github.io/youtoo/ and https://phthion.github.io/ in Website restrictions
+*Step 8*: Put whatever name, THEN THIS IS IMPORTANT, "Application restrictions" click "website", click add and copy and paste this link : https://phthion.github.io/youtoo/ and https://phthion.github.io/ in "Website Restrictions"
 then create.
 
 Step 9: It will show you the api key, copy it and paste to https://phthion.github.io/youtoo/, and that it!
