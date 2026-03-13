@@ -21,6 +21,6 @@ then create.
 
 Step 9: It will show you the api key, copy it and paste to https://phthion.github.io/youtoo/, and that it!
 ## Note
-If the "API quota used today" hit 10000, refresh the websites.
+If the "API quota used today" hit 10000, refresh the websites, and something the new YouTube UI will load, so if you hate the new UI from YouTube, refresh. 
 
 <sub> and YouToo never steal your data because I don't know what you watch.
