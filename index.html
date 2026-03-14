@@ -1394,151 +1394,6 @@ body.sidebar-collapsed #main{margin-left:0}
   border:none;
   display:block;
 }
-/* ── Custom video controls overlay ─────────────────────────── */
-#vc-overlay{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  opacity:0;
-  transition:opacity .22s;
-  pointer-events:none;
-  background:transparent;
-}
-#vc-overlay.show,
-#vf-body:hover #vc-overlay{
-  opacity:1;
-  pointer-events:all;
-}
-#vc-overlay::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;height:72px;
-  background:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,transparent 100%);
-  pointer-events:none;
-}
-#vc-overlay::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:0;right:0;height:80px;
-  background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 100%);
-  pointer-events:none;
-}
-#vc-center{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:1;
-  cursor:pointer;
-}
-#vc-big-btn{
-  width:58px;height:58px;
-  border-radius:50%;
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  border:2px solid rgba(255,255,255,.3);
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;
-  transition:background .15s,transform .12s;
-  flex-shrink:0;
-}
-#vc-big-btn:hover{background:rgba(255,255,255,.28);transform:scale(1.08)}
-#vc-big-btn svg{width:24px;height:24px;fill:#fff;flex-shrink:0}
-#vc-big-btn .ic-play{margin-left:3px}
-#vc-bar{
-  position:relative;
-  z-index:1;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:0 12px 10px;
-}
-.vc-btn{
-  width:30px;height:30px;
-  border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.88);
-  flex-shrink:0;
-  transition:color .12s,background .12s;
-}
-.vc-btn:hover{color:#fff;background:rgba(255,255,255,.12)}
-.vc-btn svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
-#vc-time{
-  font-size:.7rem;
-  font-family:var(--mono);
-  color:rgba(255,255,255,.82);
-  white-space:nowrap;
-  flex-shrink:0;
-  letter-spacing:.02em;
-}
-#vc-seek{
-  flex:1;
-  height:18px;
-  display:flex;
-  align-items:center;
-  cursor:pointer;
-  position:relative;
-}
-#vc-seek-track{
-  width:100%;
-  height:3px;
-  background:rgba(255,255,255,.25);
-  border-radius:3px;
-  position:relative;
-  transition:height .12s;
-  overflow:visible;
-}
-#vc-seek:hover #vc-seek-track{height:5px}
-#vc-seek-fill{
-  position:absolute;
-  left:0;top:0;bottom:0;
-  background:#fff;
-  border-radius:3px;
-  width:0%;
-}
-#vc-seek-dot{
-  position:absolute;
-  top:50%;
-  width:13px;height:13px;
-  background:#fff;
-  border-radius:50%;
-  transform:translate(-50%,-50%) scale(0);
-  transition:transform .12s;
-  left:0%;
-  box-shadow:0 1px 4px rgba(0,0,0,.4);
-}
-#vc-seek:hover #vc-seek-dot{transform:translate(-50%,-50%) scale(1)}
-#vc-vol-inp{
-  -webkit-appearance:none;
-  appearance:none;
-  width:60px;height:3px;
-  background:rgba(255,255,255,.3);
-  border-radius:3px;
-  outline:none;
-  cursor:pointer;
-  flex-shrink:0;
-  accent-color:#fff;
-}
-#vc-vol-inp::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:11px;height:11px;
-  border-radius:50%;
-  background:#fff;
-  cursor:pointer;
-  box-shadow:0 1px 3px rgba(0,0,0,.4);
-}
-#vc-vol-inp::-moz-range-thumb{
-  width:11px;height:11px;
-  border-radius:50%;
-  background:#fff;
-  border:none;
-  cursor:pointer;
-}
 /* transparent shield prevents iframe eating mouse during drag/resize */
 #pip-shield{
   position:absolute;
@@ -1821,39 +1676,7 @@ body.sidebar-collapsed #main{margin-left:0}
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
-  <div id="vf-body">
-    <div id="pip-shield"></div>
-    <div id="vc-overlay">
-      <div id="vc-center" onclick="vcTogglePlay()">
-        <button id="vc-big-btn" title="Play / Pause">
-          <svg viewBox="0 0 24 24" class="ic-pause"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          <svg viewBox="0 0 24 24" class="ic-play" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </button>
-      </div>
-      <div id="vc-bar">
-        <button class="vc-btn" id="vc-pp-btn" onclick="vcTogglePlay()" title="Play / Pause">
-          <svg viewBox="0 0 24 24" class="ic-pause"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          <svg viewBox="0 0 24 24" class="ic-play" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </button>
-        <span id="vc-time">0:00 / 0:00</span>
-        <div id="vc-seek">
-          <div id="vc-seek-track">
-            <div id="vc-seek-fill"></div>
-            <div id="vc-seek-dot"></div>
-          </div>
-        </div>
-        <button class="vc-btn" id="vc-mute-btn" onclick="vcToggleMute()" title="Mute / Unmute">
-          <svg viewBox="0 0 24 24" class="ic-vol" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          <svg viewBox="0 0 24 24" class="ic-mute" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-        </button>
-        <input type="range" id="vc-vol-inp" min="0" max="100" value="100" title="Volume">
-        <button class="vc-btn" id="vc-fs-btn" onclick="vcFullscreen()" title="Fullscreen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ic-fsenter"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ic-fsexit" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
+  <div id="vf-body"><div id="pip-shield"></div></div>
   <div class="pip-grip pip-grip-tl" data-corner="tl"></div>
   <div class="pip-grip pip-grip-tr" data-corner="tr"></div>
   <div class="pip-grip pip-grip-bl" data-corner="bl"></div>
@@ -3127,20 +2950,12 @@ async function _openVideoRestore(id){
 
 function renderWatch(){
   const v=curVideo;
-  // Reset controls state for new video
-  _ytPlaying=false;_ytTime=0;
-  // Seed duration from metadata so seek bar is ready before infoDelivery arrives
-  if(v.duration){
-    const p=v.duration.split(':').map(Number);
-    _ytDuration=p.length===3?p[0]*3600+p[1]*60+p[2]:p.length===2?p[0]*60+p[1]:0;
-  } else { _ytDuration=0; }
-  vcUpdateUI();
   // Iframe lives in #vf-body — never leaves it — no reload risk
   const vfBody=document.getElementById('vf-body');
   vfBody.querySelectorAll('iframe').forEach(f=>f.remove()); // clear old iframe if any
   const ifr=document.createElement('iframe');ifr.id='yt-iframe';
   // enablejsapi=1 allows postMessage commands (play/pause) and proper keyboard focus
-  ifr.src=`https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1&enablejsapi=1&controls=0&iv_load_policy=3&disablekb=1&fs=0&autoplay=1`;
+  ifr.src=`https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1&enablejsapi=1`;
   ifr.setAttribute('allowfullscreen','');ifr.setAttribute('allow','autoplay; encrypted-media; fullscreen');
   ifr.setAttribute('referrerpolicy','strict-origin-when-cross-origin');ifr.setAttribute('title',x(v.title));
   // Once loaded: subscribe to info delivery + auto-focus so keys work immediately
@@ -4073,12 +3888,6 @@ function init(){
   _startMemPoll();
   _scheduleIdleMaintenance();
 
-  window.vcTogglePlay = vcTogglePlay;
-  window.vcToggleMute = vcToggleMute;
-  window.vcSetVol     = vcSetVol;
-  window.vcFullscreen = vcFullscreen;
-  window.vcUpdateUI   = vcUpdateUI;
-
   // ── YouTube iframe keyboard control ─────────────────────────────
   //
   // Cross-origin iframes cannot receive synthetic keyboard events via
@@ -4102,95 +3911,6 @@ function init(){
   let _ytMuted     = false;
   let _ytVolume    = 100;
   let _ytTime      = 0;
-  let _ytDuration  = 0;
-
-  // ── Custom controls helpers ────────────────────────────────
-  function fmtSecs(s){
-    if(!isFinite(s)||s<0)s=0;
-    s=Math.floor(s);
-    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
-    if(h)return`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-    return`${m}:${String(sec).padStart(2,'0')}`;
-  }
-  function vcUpdateUI(){
-    const pct = _ytDuration>0 ? Math.min(100,(_ytTime/_ytDuration)*100) : 0;
-    const fill = document.getElementById('vc-seek-fill');
-    const dot  = document.getElementById('vc-seek-dot');
-    const time = document.getElementById('vc-time');
-    if(fill) fill.style.width = pct+'%';
-    if(dot)  dot.style.left   = pct+'%';
-    if(time) time.textContent = fmtSecs(_ytTime)+' / '+fmtSecs(_ytDuration);
-    // play/pause icons — update all pairs
-    document.querySelectorAll('#vc-big-btn .ic-pause, #vc-pp-btn .ic-pause').forEach(el=>el.style.display=_ytPlaying?'':'none');
-    document.querySelectorAll('#vc-big-btn .ic-play,  #vc-pp-btn .ic-play').forEach(el=>el.style.display=_ytPlaying?'none':'');
-    // mute icons
-    const ivm  = document.querySelector('#vc-mute-btn .ic-vol');
-    const ivmu = document.querySelector('#vc-mute-btn .ic-mute');
-    if(ivm)  ivm.style.display  = _ytMuted?'none':'';
-    if(ivmu) ivmu.style.display = _ytMuted?'':'none';
-    // volume slider
-    const volInp = document.getElementById('vc-vol-inp');
-    if(volInp && document.activeElement!==volInp) volInp.value = _ytMuted?0:_ytVolume;
-    // overlay: keep visible (show class) while paused
-    const ov = document.getElementById('vc-overlay');
-    if(ov){ if(_ytPlaying) ov.classList.remove('show'); else ov.classList.add('show'); }
-    // fullscreen icon
-    const inFs = !!(document.fullscreenElement||document.webkitFullscreenElement);
-    document.querySelectorAll('#vc-fs-btn .ic-fsenter').forEach(el=>el.style.display=inFs?'none':'');
-    document.querySelectorAll('#vc-fs-btn .ic-fsexit').forEach(el=>el.style.display=inFs?'':'none');
-  }
-  // RAF loop to keep time/seek in sync
-  (function vcLoop(){requestAnimationFrame(()=>{vcUpdateUI();vcLoop();});})();
-
-  function vcTogglePlay(){
-    if(_ytPlaying){ytCmd('pauseVideo');_ytPlaying=false;}
-    else           {ytCmd('playVideo'); _ytPlaying=true;}
-    vcUpdateUI();
-  }
-  function vcToggleMute(){
-    if(_ytMuted){ytCmd('unMute');_ytMuted=false;}
-    else         {ytCmd('mute');  _ytMuted=true;}
-    vcUpdateUI();
-  }
-  function vcSetVol(v){
-    _ytVolume=+v;
-    ytCmd('setVolume',[_ytVolume]);
-    if(_ytMuted&&_ytVolume>0){ytCmd('unMute');_ytMuted=false;}
-    vcUpdateUI();
-  }
-  function vcFullscreen(){
-    const el=document.getElementById('video-float');
-    if(!el)return;
-    const inFs=!!(document.fullscreenElement||document.webkitFullscreenElement);
-    if(inFs){(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}
-    else    {(el.requestFullscreen||el.webkitRequestFullscreen||function(){}).call(el);}
-  }
-  document.addEventListener('fullscreenchange',  vcUpdateUI);
-  document.addEventListener('webkitfullscreenchange', vcUpdateUI);
-  // Volume slider input
-  const _vcVolInp = document.getElementById('vc-vol-inp');
-  if(_vcVolInp) _vcVolInp.addEventListener('input', function(){ vcSetVol(this.value); });
-  // Seek bar scrubbing
-  (function(){
-    const seek = document.getElementById('vc-seek');
-    if(!seek)return;
-    let _seeking=false;
-    function doSeek(e){
-      if(!_ytDuration)return;
-      const r=seek.getBoundingClientRect();
-      const pct=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));
-      const t=pct*_ytDuration;
-      _ytTime=t;
-      ytCmd('seekTo',[t,true]);
-      vcUpdateUI();
-    }
-    seek.addEventListener('mousedown',e=>{_seeking=true;doSeek(e);e.preventDefault();});
-    document.addEventListener('mousemove',e=>{if(_seeking)doSeek(e);});
-    document.addEventListener('mouseup',  e=>{if(_seeking){doSeek(e);_seeking=false;}});
-    seek.addEventListener('touchstart',e=>{_seeking=true;doSeek(e.touches[0]);e.preventDefault();},{passive:false});
-    document.addEventListener('touchmove',e=>{if(_seeking)doSeek(e.touches[0]);},{passive:true});
-    document.addEventListener('touchend', e=>{if(_seeking){_seeking=false;}});
-  })();
 
   // Receive state/time updates from the YouTube player
   window.addEventListener('message', e => {
@@ -4201,15 +3921,13 @@ function init(){
       if (d.event === 'onStateChange') {
         // 1=playing, 2=paused, 0=ended, 3=buffering
         _ytPlaying = (d.info === 1 || d.info === 3);
-        vcUpdateUI();
       }
-      // Periodic info delivery (currentTime, volume, muted, playerState, duration)
+      // Periodic info delivery (currentTime, volume, muted, playerState)
       if (d.event === 'infoDelivery' && d.info) {
         if (d.info.playerState != null) _ytPlaying = (d.info.playerState === 1 || d.info.playerState === 3);
         if (d.info.currentTime  != null) _ytTime   = d.info.currentTime;
         if (d.info.volume       != null) _ytVolume = d.info.volume;
         if (d.info.muted        != null) _ytMuted  = d.info.muted;
-        if (d.info.duration     != null && d.info.duration>0) _ytDuration = d.info.duration;
       }
     } catch(_) {}
   });
@@ -4274,7 +3992,8 @@ function init(){
     switch (e.code) {
       case 'Space':
       case 'KeyK':
-        vcTogglePlay();
+        if (_ytPlaying) { ytCmd('pauseVideo'); _ytPlaying = false; }
+        else            { ytCmd('playVideo');  _ytPlaying = true;  }
         return; // handled — don't also focus the iframe
 
       case 'KeyJ':
