@@ -21,6 +21,6 @@ then create.
 
 Step 9: It will show you the api key, copy it and paste to https://phthion.github.io/Vidrex/, and that it!
 ## Note
-If the "API quota used today" hit 10000, refresh the websites, and sometime the new YouTube UI will load, so if you hate the new UI from YouTube, refresh. 
+If the "API quota used today" hit 10000, refresh the websites.
 
 <sub> and Vidrex never steal your data because I don't know what you watch.
