@@ -1,7 +1,64 @@
-...content of the file until line 1810...
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Discovery</title>
+    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
+    <h1>YouTube Video Discovery</h1>
+    <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <!-- Add more languages as needed -->
+    </select>
+    <div id="videos"></div>
 
-...content of the file after line 1811...
+    <script>
+        const API_KEY = 'YOUR_YOUTUBE_API_KEY';
+        const CHANNEL_ID = 'YOUR_CHANNEL_ID';
+
+        function loadClient() {
+            gapi.client.setApiKey(API_KEY);
+            return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+                .then(() => console.log("GAPI client loaded for API"))
+                .catch((err) => console.error("Error loading GAPI client for API", err));
+        }
+
+        function getVideos() {
+            return gapi.client.youtube.search.list({
+                part: 'snippet',
+                channelId: CHANNEL_ID,
+                type: 'video',
+                videoDuration: 'any',
+                maxResults: 10,
+            }).then((response) => {
+                const videos = response.result.items;
+                displayVideos(videos);
+            });
+        }
+
+        function displayVideos(videos) {
+            const videosContainer = document.getElementById('videos');
+            videosContainer.innerHTML = '';
+            videos.forEach(video => {
+                const videoElem = document.createElement('div');
+                videoElem.innerHTML = `
+                    <h3>${video.snippet.title}</h3>
+                    <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/${video.id.videoId}" 
+                    frameborder="0" allowfullscreen></iframe>
+                `;
+                videosContainer.appendChild(videoElem);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gapi.load("client", loadClient);
+            getVideos();
+        });
+    </script>
+</body>
+</html>
